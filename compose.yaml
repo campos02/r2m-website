@@ -1,0 +1,9 @@
+services:
+  r2m-website:
+    build:
+      context: .
+      args:
+        - WEBSITE_URL=$WEBSITE_URL
+        - BACKEND_NAME=$PUBLIC_BACKEND_NAME
+    networks:
+      - r2m
