@@ -4,7 +4,7 @@ const userCaches = new Map;
 async function fetchWithCache(cache, url, options = {}) {
     if (cache.has(url)) {
         const cached = await cache.get(url);
-        if (cached.expirationTime <= Date.now())
+        if (Date.now() <= cached.expirationTime)
             return cached.data;
     }
 
@@ -12,7 +12,7 @@ async function fetchWithCache(cache, url, options = {}) {
     const data = await response.json();
 
     cache.set(url, {
-        expirationTime: Date.now() + 300,
+        expirationTime: Date.now() + 300000,
         data
     });
 
