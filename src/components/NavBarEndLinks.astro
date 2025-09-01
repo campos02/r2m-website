@@ -1,11 +1,11 @@
 ---
 import {actions} from "astro:actions";
-import {fetchWithCache} from '../fetchWithCache.js';
+import {fetchWithUserCache} from '../fetchWithCache.js';
 
 const token = Astro.cookies.get('user_token').value;
 const backendName = import.meta.env.PUBLIC_BACKEND_NAME;
 
-const data = await fetchWithCache(`https://${backendName}/_r2m/user`, {
+const data = await fetchWithUserCache(token, `https://${backendName}/_r2m/user`, {
     headers: {
         Authorization: `Bearer ${token}`
     }

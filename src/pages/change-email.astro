@@ -3,7 +3,7 @@ export const prerender = false;
 
 import Layout from "../layouts/Layout.astro";
 import {actions} from "astro:actions";
-import {removeFromCache} from '../fetchWithCache.js';
+import {removeUserCache} from '../fetchWithCache.js';
 
 if (!Astro.cookies.has('user_token'))
     return Astro.redirect('/login');
@@ -18,7 +18,7 @@ if (Astro.request.method === "POST") {
     const { error } = await Astro.callAction(actions.changeEmail, formData);
 
     if (!error) {
-        removeFromCache(`https://${backendName}/_r2m/user`);
+        removeUserCache(token);
         return Astro.redirect('/user');
     } else
         resultText = `Unable to change email: ${error.message}`;

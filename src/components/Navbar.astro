@@ -1,10 +1,10 @@
 ---
 import NavBarEndLinks from "./NavBarEndLinks.astro";
 import DefaultNavBarEndLinks from "./DefaultNavBarEndLinks.astro";
-import {fetchWithCache} from '../fetchWithCache.js';
+import {fetchWithGeneralCache} from '../fetchWithCache.js';
 
 const backendName = import.meta.env.PUBLIC_BACKEND_NAME;
-const data = await fetchWithCache(`https://${backendName}/_r2m/stats`);
+const data = await fetchWithGeneralCache(`https://${backendName}/_r2m/stats`);
 
 let users;
 if (data.users == 1) {

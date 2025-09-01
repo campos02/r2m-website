@@ -1,6 +1,7 @@
-const cache = new Map;
+const generalCache = new Map;
+const userCaches = new Map;
 
-export async function fetchWithCache(url, options = {}) {
+async function fetchWithCache(cache, url, options = {}) {
     if (cache.has(url)) {
         const cached = await cache.get(url);
         if (cached.expirationTime <= Date.now())
@@ -18,6 +19,18 @@ export async function fetchWithCache(url, options = {}) {
     return data;
 }
 
-export function removeFromCache(url) {
-    cache.delete(url);
+export async function fetchWithGeneralCache(url, options = {}) {
+    return await fetchWithCache(generalCache, url, options);
+}
+
+export async function fetchWithUserCache(token, url, options = {}) {
+    if (!userCaches.has(token))
+        userCaches.set(token, new Map);
+
+    const cache = userCaches.get(token);
+    return await fetchWithCache(cache, url, options);
+}
+
+export function removeUserCache(token) {
+    userCaches.delete(token);
 }
