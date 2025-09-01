@@ -2,6 +2,7 @@
 export const prerender = false;
 
 import {actions} from "astro:actions";
+import {removeFromCache} from '../fetchWithCache.js';
 
 if (!Astro.cookies.has('user_token'))
     return Astro.redirect('/login');
@@ -17,6 +18,7 @@ try {
     });
 
     Astro.cookies.delete('user_token');
+    removeFromCache(`https://${backendName}/_r2m/user`);
 } catch (error) {
     return Astro.redirect('/');
 }
